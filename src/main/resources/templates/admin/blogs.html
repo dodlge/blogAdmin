@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>博客管理</title>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <link href="../../static/css/me.css" rel="stylesheet">
+</head>
+<body>
+<!--导航-->
+<nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal  header item">后台管理</h2>
+            <a href="#" class="active m-item item m-mobile-hide"><i class="home icon"></i> 博客</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i> 标签</a>
+            <div class="right m-item m-mobile-hide menu">
+                <div class="ui dropdown item">
+                    <div class="text">
+                        <img src="https://picsum.photos/id/237/100/100" alt="" class="ui avatar image">
+                        wz
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <div class="item" data-value="male">注销</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui black icon button m-top-right m-mobile-show menu toggle">
+        <i class=" sidebar icon"></i>
+    </a>
+</nav>
+
+<!--二级导航-->
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#" class="item">发布</a>
+            <a href="#" class="active item">列表</a>
+        </div>
+    </div>
+</div>
+
+<!--中间内容-->
+<div class="m-container-small m-padded-tb-tiny-top-30">
+    <div class="ui container">
+        <form action="#" method="post" class="ui segment form">
+            <div class=" inline fields">
+                <div class="field">
+                    <input type="text" name="title" placeholder="标题">
+                </div>
+                <div class="field">
+                    <div class="ui selection dropdown">
+                        <input type="hidden" name="type">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">分类</div>
+                        <div class="menu">
+                            <div class="item" data-value="1">错误日志</div>
+                            <div class="item" data-value="2">开着手册</div>
+                            <div class="item" data-value="3">错误日志</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--推荐按钮-->
+                <div class="filed">
+                    <div class="ui checkbox">
+                        <input type="checkbox" id="recommend" name="recommend">
+                        <label for="recommend">推荐</label>
+                    </div>
+                </div>
+
+                <!--按钮-->
+                <div class="filed">
+                    <button class="ui mini teal basic button">
+                        <i class="search icon"></i>搜索
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!--表格-->
+        <table class="ui celled table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>标题</th>
+                    <th>类型</th>
+                    <th>推荐</th>
+                    <th>更新时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>可以联系</td>
+                    <td>杂谈</td>
+                    <td>是</td>
+                    <td>2019-01-1</td>
+                    <td>
+                        <a href="#" class="ui mini teal basic button">编辑</a>
+                        <a href="#" class="ui mini red basic button">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="6">
+                        <div class="ui mini pagination menu">
+                            <a class="item">上一页</a>
+                            <a class="item">下一页</a>
+                        </div>
+                        <!--新增按钮-->
+                        <a href="#" class="ui right floated mini teal basic button">新增</a>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+</script>
+</body>
+</html>
