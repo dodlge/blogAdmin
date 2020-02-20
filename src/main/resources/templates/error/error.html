@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
+<head th:replace="_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <title>error</title>
 </head>
 <body>
+<!--导航-->
+<nav th:replace="_fragments :: menu(0)">
+
+</nav>
     <!--<div>
         <div th:utext="'&lt;!&#45;&#45;'" th:remove="tag"></div>
         <div th:utext="'Failed Request URL : ' + ${url}" th:remove="tag"></div>
@@ -14,5 +18,29 @@
         </ul>
         <div th:utext="'&#45;&#45;&gt;'" th:remove="tag"></div>
     </div>-->
+<br>
+<br>
+<br>
+<!--提示异常-->
+<div class="m-container-small">
+    <div class="ui error message">
+        <div class="ui container">
+            <h2>error</h2>
+            <p>发生错误，请联系管理员</p>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<!--底部footer-->
+<footer th:replace="_fragments :: footer">
+
+</footer>
+
+<!--JS-->
+<th:block th:replace="_fragments :: script">
+</th:block>
 </body>
 </html>

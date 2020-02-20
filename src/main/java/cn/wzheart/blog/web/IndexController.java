@@ -17,8 +17,8 @@ public class IndexController {
         return view;
     }
 
-    @GetMapping("404")
-    public String inde404x(){
-        return "/error/error";
+    @GetMapping("/error/{view}")
+    public String inde404x(@PathVariable String view){
+        return "error/"+view;
     }
 }
