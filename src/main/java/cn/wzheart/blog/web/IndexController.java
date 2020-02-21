@@ -12,10 +12,10 @@ public class IndexController {
         return "index";
     }
 
-    @GetMapping("/{view}")
+    /*@GetMapping("/{view}")
     public String indexView(@PathVariable String view){
         return view;
-    }
+    }*/
 
     @GetMapping("/error/{view}")
     public String inde404x(@PathVariable String view){
