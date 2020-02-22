@@ -89,7 +89,7 @@
 </th:block>
 
 
-<script>
+<script type="text/javascript">
     $('.menu.toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');
     });
@@ -98,7 +98,18 @@
         on: 'hover'
     });
 
-    layer.msg('登陆成功', {icon: 1},3000);
+    $(function () {
+        // 提示登陆成功
+        layer.msg('登陆成功', {icon: 1},3000);
+
+        // 5s以后跳转到博客页面
+        setInterval (function () {
+            location.href="/admin/blogs"
+        }, 5000);
+    })
+
+
+
 </script>
 </body>
 </html>
