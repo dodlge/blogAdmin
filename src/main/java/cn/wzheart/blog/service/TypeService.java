@@ -28,7 +28,9 @@ public class TypeService {
     }
 
     public Type getType(Long id){
-        return  typeRepository.getOne(id);
+        Optional<Type> o = typeRepository.findById(id);
+        Type type = o.get();
+        return type;
     }
 
     public Page<Type> listType(Pageable pageable){
@@ -49,5 +51,9 @@ public class TypeService {
 
     public void deleteType(Long id){
         typeRepository.deleteById(id);
+    }
+
+    public Type getTypeByName(String name) {
+        return typeRepository.findByName(name);
     }
 }

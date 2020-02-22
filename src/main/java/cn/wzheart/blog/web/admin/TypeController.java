@@ -3,15 +3,22 @@ package cn.wzheart.blog.web.admin;
 import cn.wzheart.blog.entity.Type;
 import cn.wzheart.blog.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 /**
  * @author wz
@@ -32,7 +39,7 @@ public class TypeController {
      * @return
      */
     @GetMapping("/types")
-    public String List(@PageableDefault(size = 3,page=0,sort = {"id"},direction = Sort.Direction.DESC) Pageable pageable,
+    public String List(@PageableDefault(size = 10,page=0,sort = {"id"},direction = Sort.Direction.DESC) Pageable pageable,
                        Model model){
         Page<Type> types = typeService.listType(pageable);
         model.addAttribute("page",types);
@@ -44,13 +51,62 @@ public class TypeController {
      * 添加的页面
      */
     @GetMapping("/types/addView")
-    public String addView(){
+    public String addView(Model model){
+        model.addAttribute("type",new Type());
         return "admin/types-input";
     }
 
+    /**
+     * 添加type
+     * @param type
+     * @param attributes
+     * @return
+     */
     @PostMapping("/types/add")
-    public String addType(Type type){
+    public String addType(@Valid Type type, BindingResult result, RedirectAttributes attributes){
+        // 数据验证
+        if (result.hasErrors()) {
+            return "admin/types-input";
+        }
+        // 为空判断
+        String name = type.getName();
+        Type t = typeService.getTypeByName(name);
+        if (t != null) {
+            result.rejectValue("name","nameError","不能重复添加分类！");
+        }
+
+        // 保存
         typeService.saveType(type);
+
+        if (type.getId()==null){
+            attributes.addFlashAttribute("msg","添加成功~");
+        }else{
+            attributes.addFlashAttribute("msg","更新成功~");
+        }
+        return "redirect:/admin/types";
+    }
+
+    /**
+     * 编辑页面
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping("/types/edit/{id}")
+    public String editView(@PathVariable Long id, Model model){
+        model.addAttribute("type",typeService.getType(id));
+        return "admin/types-input";
+    }
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    @RequestMapping("/types/delete/{id}")
+    public String delete(@PathVariable Long id,RedirectAttributes attributes){
+        attributes.addFlashAttribute("msg","删除成功");
+        typeService.deleteType(id);
         return "redirect:/admin/types";
     }
 }

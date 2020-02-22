@@ -41,8 +41,8 @@
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="#" class="active item">发布</a>
-            <a href="#" class="item">列表</a>
+            <a href="#" th:href="@{/admin/types/addView}" class="active item">新增</a>
+            <a href="#" th:href="@{/admin/types}" class="item">列表</a>
         </div>
     </div>
 </div>
@@ -50,16 +50,26 @@
 <!--中间内容-->
 <div class="m-container-small m-padded-tb-tiny-top-30">
     <div class="ui container">
-        <form action="#" method="post" th:action="@{/admin/types/add}" class="ui form">
+        <form action="#" method="post" th:action="@{/admin/types/add}" th:object="${type}" class="ui form">
             <!--首页图-->
-            <div class="field">
+            <div class="required field">
                 <div class="ui left labeled input">
                     <label class="ui teal basic label">名称</label>
-                    <input type="text" name="name" placeholder="分类名称">
-
+                    <input type="text" name="name" placeholder="分类名称" th:value="*{name}">
+                    <input type="hidden" name="id" th:value="${type.id}">
                 </div>
             </div>
+            <!--提示信息-->
+            <div class="ui error message"></div>
 
+
+            <!--/*/
+            <div class="ui negative message" th:if="${#fields.hasErrors('name')}">
+                <i class="close icon"></i>
+                <div class="header">提示信息：</div>
+                <p th:errors="*{name}"></p>
+            </div>
+           /*/-->
             <!--按钮-->
             <div class="ui right aligned container">
                 <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
@@ -81,6 +91,18 @@
         on: 'hover'
     });
 
+    // 验证
+    $('.ui.form').form({
+        fields: {
+            title:{
+                identifier:'name',
+                rules:[{
+                    type: 'empty',
+                    prompt: '请输入分类名称'
+                }]
+            }
+        }
+    });
 </script>
 </body>
 </html>
