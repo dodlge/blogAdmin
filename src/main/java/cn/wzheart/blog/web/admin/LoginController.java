@@ -49,7 +49,7 @@ public class LoginController {
             // 不传递密码
             user.setPassword(null);
             session.setAttribute("user",user);
-            return "admin/index";
+            return "admin/blogs";
         }else{
             attributes.addFlashAttribute("message", "用户名和密码错误");
             return "redirect:/admin";
