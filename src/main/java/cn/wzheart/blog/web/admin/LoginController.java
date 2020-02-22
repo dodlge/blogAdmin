@@ -2,6 +2,7 @@ package cn.wzheart.blog.web.admin;
 
 import cn.wzheart.blog.entity.User;
 import cn.wzheart.blog.service.UserService;
+import cn.wzheart.blog.util.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +43,7 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@RequestParam String userName, @RequestParam String password,
                         HttpSession session, RedirectAttributes attributes){
-        User user = userService.checkUser(userName, password);
+        User user = userService.checkUser(userName, MD5Utils.code(password));
         // 判断用户账号密码
         if (null != user){
             // 不传递密码
