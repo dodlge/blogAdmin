@@ -50,6 +50,7 @@
 <div class="m-container-small m-padded-tb-tiny-top-30">
     <div class="ui container">
         <form action="#" method="post" class="ui segment form">
+            <input type="hidden" name="page">
             <div class=" inline fields">
                 <div class="field">
                     <input type="text" name="title" placeholder="标题">
@@ -85,7 +86,7 @@
         </form>
 
         <!--表格-->
-        <table class="ui celled table">
+        <table class="ui celled teal compact table">
             <thead>
                 <tr>
                     <th></th>
@@ -97,24 +98,24 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>可以联系</td>
-                    <td>杂谈</td>
-                    <td>是</td>
-                    <td>2019-01-1</td>
+                <tr th:each="blogs,iterStat : &{page.content}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${blog.title}">可以联系</td>
+                    <td th:text="${blog.type.name}">杂谈</td>
+                    <td th:text="${blog.recommend} ? '是':'否'">是</td>
+                    <td th:text="${blog.updateTime}">2019-01-1</td>
                     <td>
-                        <a href="#" class="ui mini teal basic button">编辑</a>
-                        <a href="#" class="ui mini red basic button">删除</a>
+                        <a href="#" th:href="@{/admin/blogs/edit/{id}(id=${blog.id})" class="ui mini teal basic button">编辑</a>
+                        <a href="#" th:href="@{/admin/blogs/delete/{id}(id=${blog.id})" class="ui mini red basic button">删除</a>
                     </td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <th colspan="6">
-                        <div class="ui mini pagination menu">
-                            <a class="item">上一页</a>
-                            <a class="item">下一页</a>
+                        <div class="ui mini pagination menu" th:if="$(page.totalPages)>1">
+                            <a class="item" th:unless="${page.first}" onclick="page(this)" th:attr="data-page=${page.number}-1">上一页</a>
+                            <a class="item" th:unless="${page.last}" onclick="page(this)" th:attr="data-page=${page.number}+1">下一页</a>
                         </div>
                         <!--新增按钮-->
                         <a href="#" class="ui right floated mini teal basic button">新增</a>
@@ -140,6 +141,10 @@
     $('.ui.dropdown').dropdown({
         on: 'hover'
     });
+
+    function page(obj) {
+        $('[name="page"]').val($(obj).data("page"));
+    }
 </script>
 </body>
 </html>

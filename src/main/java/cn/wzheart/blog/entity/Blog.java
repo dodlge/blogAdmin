@@ -42,6 +42,9 @@ public class Blog {
     private boolean shareStatement;
     private boolean commentabled;
     private boolean published;
+    /**
+     * 是否推荐
+     */
     private boolean recommend;
 
     @Temporal(TemporalType.TIMESTAMP)// 数据库时间类型
