@@ -60,9 +60,9 @@
                         <input type="hidden" name="typeId">
                         <i class="dropdown icon"></i>
                         <div class="default text">分类</div>
-                        <div class="menu">
-                            <div class="item" data-value="1">错误日志</div>
-                            <div class="item" data-value="2">开发者手册</div>
+                        <div class="menu" id="type">
+                            <!--<div class="item" data-value="1">错误日志</div>
+                            <div class="item" data-value="2">开发者手册</div>-->
                         </div>
                     </div>
                 </div>
@@ -134,22 +134,38 @@
     <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
 </th:block>
 <script>
+
+
     $('.menu.toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');
     });
 
-    $('.ui.dropdown').dropdown({
-        on: 'hover'
-    });
+    $(function () {
+        loadTypes();
+    })
+
+
 
     // 获取分类
-    $.ajax({
-        url:"/admin/types/ListTypes",
-        type: "post",
-        success:function (res) {
-            console.log(res);
-        }
-    })
+    function loadTypes(){
+        $.ajax({
+            url:"/admin/types/listTypes",
+            type: "post",
+            success:function (res) {
+                // 遍历添加
+                $.each(res,function (i,v) {
+                    $("#type").append('<div class="item" data-value="' + v.id + '+">'+ v.name +'</div>')
+                });
+                // 初始化下拉框
+                $('.ui.dropdown').dropdown({
+                    on: 'hover'
+                });
+            }
+        })
+    }
+
+
+
 
 
 

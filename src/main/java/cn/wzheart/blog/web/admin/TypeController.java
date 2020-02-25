@@ -11,10 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,7 +24,7 @@ import java.util.List;
  * 分类
  */
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/types")
 public class TypeController {
 
     @Autowired
@@ -39,7 +36,7 @@ public class TypeController {
      * @param model
      * @return
      */
-    @GetMapping("/types")
+    @GetMapping("")
     public String List(@PageableDefault(size = 10,page=0,sort = {"id"},direction = Sort.Direction.DESC) Pageable pageable,
                        Model model){
         Page<Type> types = typeService.listType(pageable);
@@ -51,7 +48,7 @@ public class TypeController {
     /**
      * 添加的页面
      */
-    @GetMapping("/types/addView")
+    @GetMapping("/addView")
     public String addView(Model model){
         model.addAttribute("type",new Type());
         return "admin/types-input";
@@ -63,7 +60,7 @@ public class TypeController {
      * @param attributes
      * @return
      */
-    @PostMapping("/types/add")
+    @PostMapping("/add")
     public String addType(@Valid Type type, BindingResult result, RedirectAttributes attributes){
         // 数据验证
         if (result.hasErrors()) {
@@ -93,7 +90,7 @@ public class TypeController {
      * @param model
      * @return
      */
-    @RequestMapping("/types/edit/{id}")
+    @RequestMapping("/edit/{id}")
     public String editView(@PathVariable Long id, Model model){
         model.addAttribute("type",typeService.getType(id));
         return "admin/types-input";
@@ -104,7 +101,7 @@ public class TypeController {
      * @param id
      * @return
      */
-    @RequestMapping("/types/delete/{id}")
+    @RequestMapping("/delete/{id}")
     public String delete(@PathVariable Long id,RedirectAttributes attributes){
         attributes.addFlashAttribute("msg","删除成功");
         typeService.deleteType(id);
@@ -114,6 +111,8 @@ public class TypeController {
     /**
      * 获取所有
      */
+    @RequestMapping("/listTypes")
+    @ResponseBody
     public List<Type> ListTypes(){
         return typeService.getAll();
     }

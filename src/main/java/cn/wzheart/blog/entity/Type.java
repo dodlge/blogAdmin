@@ -1,5 +1,7 @@
 package cn.wzheart.blog.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public class Type {
     private String name;
 
     @OneToMany(mappedBy = "type")
+    @JsonIgnore
     private List<Blog> blogs = new ArrayList<>();
 
 
