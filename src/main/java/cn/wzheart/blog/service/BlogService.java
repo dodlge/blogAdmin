@@ -3,6 +3,7 @@ package cn.wzheart.blog.service;
 import cn.wzheart.blog.dao.BlogRepository;
 import cn.wzheart.blog.entity.Blog;
 import cn.wzheart.blog.entity.Type;
+import cn.wzheart.blog.vo.BlogQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,22 +43,22 @@ public class BlogService {
     /**
      * 分页查询获取list
      */
-    public Page<Blog> listBlog(Pageable pageable,Blog blog){
+    public Page<Blog> listBlog(Pageable pageable, BlogQuery query){
         Page<Blog> all = blogRepository.findAll(new Specification<Blog>() {
             @Override
             public Predicate toPredicate(Root<Blog> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates = new ArrayList<>();
                 // 判断 标题 分类 是否推荐
-                if (null != blog.getTitle() && !"".equals(blog.getTitle())){
-                    predicates.add(criteriaBuilder.like(root.<String>get("title"),"%"+blog.getTitle()+"%"));
+                if (null != query.getTitle() && !"".equals(query.getTitle())){
+                    predicates.add(criteriaBuilder.like(root.<String>get("title"),"%"+query.getTitle()+"%"));
                 }
 
-                if (null != blog.getType().getId() ){
-                    predicates.add(criteriaBuilder.equal(root.<Type>get("type").get("id"),blog.getType().getId()));
+                if (null != query.getTypeId() ){
+                    predicates.add(criteriaBuilder.equal(root.<Type>get("type").get("id"),query.getTypeId()));
                 }
 
-                if (blog.isRecommend()){
-                    predicates.add(criteriaBuilder.equal(root.<Boolean>get("recommend"),blog.isRecommend()));
+                if (query.isRecommend()){
+                    predicates.add(criteriaBuilder.equal(root.<Boolean>get("recommend"),query.isRecommend()));
                 }
                 criteriaQuery.where(predicates.toArray(new Predicate[predicates.size()]));
                 return null;

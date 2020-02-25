@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -35,6 +36,14 @@ public class TypeService {
 
     public Page<Type> listType(Pageable pageable){
         Page<Type> all = typeRepository.findAll(pageable);
+        return all;
+    }
+
+    /**
+     * 获取所有的Types
+     */
+    public List<Type> getAll(){
+        List<Type> all = typeRepository.findAll();
         return all;
     }
 

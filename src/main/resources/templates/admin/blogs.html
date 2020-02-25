@@ -49,7 +49,7 @@
 <!--中间内容-->
 <div class="m-container-small m-padded-tb-tiny-top-30">
     <div class="ui container">
-        <form action="#" method="post" class="ui segment form">
+        <div class="ui segment form">
             <input type="hidden" name="page">
             <div class=" inline fields">
                 <div class="field">
@@ -57,13 +57,12 @@
                 </div>
                 <div class="field">
                     <div class="ui selection dropdown">
-                        <input type="hidden" name="type">
+                        <input type="hidden" name="typeId">
                         <i class="dropdown icon"></i>
                         <div class="default text">分类</div>
                         <div class="menu">
                             <div class="item" data-value="1">错误日志</div>
-                            <div class="item" data-value="2">开着手册</div>
-                            <div class="item" data-value="3">错误日志</div>
+                            <div class="item" data-value="2">开发者手册</div>
                         </div>
                     </div>
                 </div>
@@ -78,51 +77,52 @@
 
                 <!--按钮-->
                 <div class="filed">
-                    <button class="ui mini teal basic button">
-                        <i class="search icon"></i>搜索
+                    <button type="button" id="search-btn" class="ui mini teal basic button">
+                        <i class="search icon" ></i>搜索
                     </button>
                 </div>
             </div>
-        </form>
+        </div>
 
         <!--表格-->
         <table class="ui celled teal compact table">
             <thead>
-                <tr>
-                    <th></th>
-                    <th>标题</th>
-                    <th>类型</th>
-                    <th>推荐</th>
-                    <th>更新时间</th>
-                    <th>操作</th>
-                </tr>
+            <tr>
+                <th></th>
+                <th>标题</th>
+                <th>类型</th>
+                <th>推荐</th>
+                <th>更新时间</th>
+                <th>操作</th>
+            </tr>
             </thead>
             <tbody>
-                <tr th:each="blogs,iterStat : &{page.content}">
-                    <td th:text="${iterStat.count}">1</td>
-                    <td th:text="${blog.title}">可以联系</td>
-                    <td th:text="${blog.type.name}">杂谈</td>
-                    <td th:text="${blog.recommend} ? '是':'否'">是</td>
-                    <td th:text="${blog.updateTime}">2019-01-1</td>
-                    <td>
-                        <a href="#" th:href="@{/admin/blogs/edit/{id}(id=${blog.id})" class="ui mini teal basic button">编辑</a>
-                        <a href="#" th:href="@{/admin/blogs/delete/{id}(id=${blog.id})" class="ui mini red basic button">删除</a>
-                    </td>
-                </tr>
+            <tr>
+                <td>1</td>
+                <td>可以联系</td>
+                <td>杂谈</td>
+                <td>是</td>
+                <td>2019-01-1</td>
+                <td>
+                    <a href="#" class="ui mini teal basic button">编辑</a>
+                    <a href="#" class="ui mini red basic button">删除</a>
+                </td>
+            </tr>
             </tbody>
             <tfoot>
-                <tr>
-                    <th colspan="6">
-                        <div class="ui mini pagination menu" th:if="$(page.totalPages)>1">
-                            <a class="item" th:unless="${page.first}" onclick="page(this)" th:attr="data-page=${page.number}-1">上一页</a>
-                            <a class="item" th:unless="${page.last}" onclick="page(this)" th:attr="data-page=${page.number}+1">下一页</a>
-                        </div>
-                        <!--新增按钮-->
-                        <a href="#" class="ui right floated mini teal basic button">新增</a>
-                    </th>
-                </tr>
+            <tr>
+                <th colspan="6">
+                    <div class="ui mini pagination menu">
+                        <a class="item">上一页</a>
+                        <a class="item">下一页</a>
+                    </div>
+                    <!--新增按钮-->
+                    <a href="#" class="ui right floated mini teal basic button">新增</a>
+                </th>
+            </tr>
             </tfoot>
         </table>
+
     </div>
 </div>
 
@@ -142,9 +142,17 @@
         on: 'hover'
     });
 
-    function page(obj) {
-        $('[name="page"]').val($(obj).data("page"));
-    }
+    // 获取分类
+    $.ajax({
+        url:"/admin/types/ListTypes",
+        type: "post",
+        success:function (res) {
+            console.log(res);
+        }
+    })
+
+
+
 </script>
 </body>
 </html>

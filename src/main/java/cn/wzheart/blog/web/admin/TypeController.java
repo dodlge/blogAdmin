@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author wz
@@ -108,5 +109,12 @@ public class TypeController {
         attributes.addFlashAttribute("msg","删除成功");
         typeService.deleteType(id);
         return "redirect:/admin/types";
+    }
+
+    /**
+     * 获取所有
+     */
+    public List<Type> ListTypes(){
+        return typeService.getAll();
     }
 }

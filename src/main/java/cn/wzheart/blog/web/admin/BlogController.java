@@ -1,7 +1,10 @@
 package cn.wzheart.blog.web.admin;
 
 import cn.wzheart.blog.entity.Blog;
+import cn.wzheart.blog.entity.Type;
 import cn.wzheart.blog.service.BlogService;
+import cn.wzheart.blog.service.TypeService;
+import cn.wzheart.blog.vo.BlogQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 /**
  * @author wz
@@ -23,11 +28,24 @@ public class BlogController {
 
     @Autowired
     private BlogService blogService;
+    @Autowired
+    private TypeService typeService;
     @GetMapping("")
     public String index(@PageableDefault(size = 2,sort = {"updateTime"},direction = Sort.Direction.DESC) Model model,
-                        Pageable pageable, Blog blog){
-        Page<Blog> blogs = blogService.listBlog(pageable, blog);
+                        Pageable pageable, BlogQuery query){
+       /* Page<Blog> blogs = blogService.listBlog(pageable, query);
         model.addAttribute("blogs",blogs);
+        // 分类
+        List<Type> types = typeService.listType();
+        model.addAttribute("types",null);*/
         return "admin/blogs";
+    }
+
+    @GetMapping("/search")
+    public String search(@PageableDefault(size = 2,sort = {"updateTime"},direction = Sort.Direction.DESC) Model model,
+                        Pageable pageable, BlogQuery query){
+        /*Page<Blog> blogs = blogService.listBlog(pageable, query);
+        model.addAttribute("blogs",blogs);*/
+        return "admin/blogs :: blogList ";
     }
 }
