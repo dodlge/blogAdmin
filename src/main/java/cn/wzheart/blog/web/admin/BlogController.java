@@ -1,12 +1,9 @@
 package cn.wzheart.blog.web.admin;
 
-import cn.wzheart.blog.entity.Blog;
-import cn.wzheart.blog.entity.Type;
 import cn.wzheart.blog.service.BlogService;
 import cn.wzheart.blog.service.TypeService;
 import cn.wzheart.blog.vo.BlogQuery;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -14,8 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 /**
  * @author wz
@@ -41,11 +36,12 @@ public class BlogController {
         return "admin/blogs";
     }
 
-    @GetMapping("/search")
-    public String search(@PageableDefault(size = 2,sort = {"updateTime"},direction = Sort.Direction.DESC) Model model,
-                        Pageable pageable, BlogQuery query){
-        /*Page<Blog> blogs = blogService.listBlog(pageable, query);
-        model.addAttribute("blogs",blogs);*/
-        return "admin/blogs :: blogList ";
+    /**
+     * 添加页面
+     * @return
+     */
+    @RequestMapping("/addView")
+    public String search(){
+        return "admin/blogs-input";
     }
 }
