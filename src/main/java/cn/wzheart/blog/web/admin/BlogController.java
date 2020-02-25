@@ -1,5 +1,6 @@
 package cn.wzheart.blog.web.admin;
 
+import cn.wzheart.blog.entity.Blog;
 import cn.wzheart.blog.service.BlogService;
 import cn.wzheart.blog.service.TypeService;
 import cn.wzheart.blog.vo.BlogQuery;
@@ -44,4 +45,13 @@ public class BlogController {
     public String search(){
         return "admin/blogs-input";
     }
+
+    /**
+     * 保存
+     */
+    @RequestMapping("/save")
+    public String save(Blog blog){
+        return "";
+    }
+
 }
